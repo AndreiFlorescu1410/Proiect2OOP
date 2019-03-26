@@ -151,7 +151,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CoadaDePrioritati.cpp" />
+    <ClCompile Include="ListaDubluInlantuita.cpp" />
+    <ClCompile Include="ListaSimpluInlantuita.cpp" />
     <ClCompile Include="Proiect2OOP.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="input.in" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CoadaDePrioritati.h" />
+    <ClInclude Include="ListaDubluInlantuita.h" />
+    <ClInclude Include="ListaSimpluInlantuita.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
