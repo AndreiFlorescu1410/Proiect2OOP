@@ -3,9 +3,9 @@ Liste de numere întregi (implementate dinamic)
 
 
 Se dau urmatoarele clase:  
-- Nod {char info, nod*next}  
-- Nod_dublu:Nod {nod * ante;};  
-- Nod_prioritate:Nod_dublu {int prio;}  
+- Nod {int info, nod*next}  
+- Nod_dublu:Nod {nod * ante}  
+- Nod_prioritate:Nod_dublu {int prio}  
 - ListaSimpluInlantuita  
 - ListaDubluInlantuita : ListaSimpluInlantuita  
 - CoadaDePrioritati : ListaDubluInlantuita  
