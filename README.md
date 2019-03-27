@@ -14,7 +14,8 @@ ListaSimpluInlantuita trebuie sa foloseasca elemente de tip Nod.
 ListaDubluInlantuita trebuie sa foloseasca elemente de tip Nod_dublu si  
 Clasa Coada_prioritati sa aibă elemente de tip Nod_prioritate.   
 Clasele derivate trebuie sa contina cel puțin constructori parametrizati  
-prin care sa se evidentieze transmiterea parametrilor către
+prin care sa se evidentieze transmiterea parametrilor către 
+constructorul din clasa de baza si destructori.
 
 Fiecare clasa trebuie sa aibe: 
  - metode de: introducere a unui element (unde alege programatorul)  
