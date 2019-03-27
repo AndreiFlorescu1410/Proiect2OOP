@@ -29,6 +29,11 @@ CoadaDePrioritati* CoadaDePrioritati::operator +(CoadaDePrioritati* first2)
 	return this;
 }
 
+CoadaDePrioritati* CoadaDePrioritati::operator=(CoadaDePrioritati*)
+{
+	return nullptr;
+}
+
 CoadaDePrioritati::CoadaDePrioritati()
 {
 }

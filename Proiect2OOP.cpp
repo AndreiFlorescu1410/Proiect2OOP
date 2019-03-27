@@ -14,10 +14,34 @@ void insert_final(ListaSimpluInlantuita * &c, ListaSimpluInlantuita* new_element
 		c = new_element;
 	else if (c->GetNext() == NULL)      //cazul in care nodul cap este singurul din lista si trebuie formata lista circulara
 	{
-		c->SetNext(new_element->GetCurrentNod);
+		c->SetNext(new_element->GetCurrentNod());
 		c = new_element;                //noul element devine capul listei
 	}
 }
+void insert_final(ListaDubluInlantuita*& c, ListaDubluInlantuita* new_element)
+{
+	if (c == NULL)
+		c = new_element;
+	else if (c->GetNext() == NULL)      //cazul in care nodul cap este singurul din lista si trebuie formata lista circulara
+	{
+		c->SetNext(new_element->GetCurrentNod());
+		new_element->SetNext(c->GetCurrentNod());
+		c = new_element;                //noul element devine capul listei
+	}
+}
+void insert_final(CoadaDePrioritati*& c, CoadaDePrioritati* new_element)
+{
+	if (c == NULL)
+		c = new_element;
+	else if (c->GetNext() == NULL)      //cazul in care nodul cap este singurul din lista si trebuie formata lista circulara
+	{
+		c->SetNext(new_element->GetCurrentNod());
+		new_element->SetNext(c->GetCurrentNod());
+		c = new_element;                //noul element devine capul listei
+	}
+}
+
+
 
 void insert_after_x(ListaSimpluInlantuita* c, ListaSimpluInlantuita* new_element, int x)
 {
@@ -57,12 +81,11 @@ void remove_k(ListaSimpluInlantuita* &first, ListaSimpluInlantuita* c, int& n, i
 	}
 
 }
-int read(int& n, int reading_list) //meniul de citire. Foloesesc reading_list sa stiu daca citesc lista sau elementul 'k'
+int read(CoadaDePrioritati *& c, int& n, bool reading_list) //meniul de citire. Foloesesc reading_list sa stiu daca citesc lista sau elementul 'k'
 {								   //1-lista simpla 2-lista dubla 3- coada de prioritati 0-'k'
 	int k;
 	antet
-
-		cout << "Alegeti metoda de citire a" << ((reading_list == 0) ? " a lui k " : " listei:") << endl; //afisare in functie de ce citesc
+	cout << "Alegeti metoda de citire a" << ((reading_list == 0) ? " a lui k " : " listei:") << endl; //afisare in functie de ce citesc
 	cout << "1. Fisier" << endl;
 	cout << "2. Tastatura" << endl;
 	int caz;
@@ -89,15 +112,23 @@ int read(int& n, int reading_list) //meniul de citire. Foloesesc reading_list sa
 			{
 				if (reading_list >= 1)
 				{
+					ListaDubluInlantuita* new_element;
 					if (reading_list == 1)
-						ListaSimpluInlantuita * new_element = c;
+						ListaSimpluInlantuita * new_element;
 					else if (reading_list == 2)
-						ListaDubluInlantuita * new_element = c;
+						ListaDubluInlantuita * new_element;
+					else
+						CoadaDePrioritati * new_element;
 					c = NULL;
 					while (f >> new_element)             //citesc valoarea nodului
 					{
 						insert_final(c, new_element);  //il adaug la "finalul" listei
-						new_element = new lista;      //reinitializez noul element
+						if (reading_list == 1)			//reinitializez noul element
+							ListaSimpluInlantuita * new_element;
+						else if (reading_list == 2)
+							ListaDubluInlantuita * new_element;
+						else
+							CoadaDePrioritati * new_element;      
 						n++;                          //incrementez numarul nodurilor din lista
 					}
 				}

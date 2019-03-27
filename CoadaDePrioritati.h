@@ -15,6 +15,8 @@ public:
 	void SetPrio(int Prio) { current_nod->prio = Prio; }
 
 	CoadaDePrioritati* operator+(CoadaDePrioritati*);
+	CoadaDePrioritati* operator=(CoadaDePrioritati*);
+	bool CoadaDePrioritati ==(CoadaDePrioritati*);
 
 	CoadaDePrioritati();
 	~CoadaDePrioritati();;

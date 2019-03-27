@@ -27,6 +27,8 @@ public:
 	friend ostream& operator <<(istream& i, ListaSimpluInlantuita* c);
 	friend istream& operator >>(istream& i, ListaSimpluInlantuita* c);
 	ListaSimpluInlantuita* operator+(ListaSimpluInlantuita*);
+	ListaSimpluInlantuita* operator=(ListaSimpluInlantuita*);
+	bool operator==(ListaSimpluInlantuita*);
 
 	ListaSimpluInlantuita();
 	~ListaSimpluInlantuita();

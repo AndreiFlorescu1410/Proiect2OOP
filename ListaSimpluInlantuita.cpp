@@ -14,15 +14,30 @@ ostream& operator <<(ostream& o, ListaSimpluInlantuita* c)
 	return o;
 }
 
-ListaSimpluInlantuita* ListaSimpluInlantuita::operator +(ListaSimpluInlantuita* first2)
+
+ListaSimpluInlantuita* ListaSimpluInlantuita::operator=(ListaSimpluInlantuita* c)
 {
-	ListaSimpluInlantuita* c1 = this;
-	while (c1 != this)
-		c1->SetCurrentNod(c1->GetNext());
-	c1->SetNext(first2->GetCurrentNod());
-	return this;
+	this->SetCurrentNod(c->GetCurrentNod());
+	this->SetI(c->GetI);
+	this->SetNext(c->GetNext);
 }
 
+bool ListaSimpluInlantuita::operator==(ListaSimpluInlantuita* c)
+{
+	if (this->GetCurrentNod() == c->GetCurrentNod())
+		return true;
+	else
+		return false;
+}
+
+ListaSimpluInlantuita* ListaSimpluInlantuita::operator +(ListaSimpluInlantuita* first2)
+{
+	ListaSimpluInlantuita* c = this;
+	while (!(c == first2))
+		c->SetCurrentNod(c->GetNext());
+	c->SetNext(first2->GetCurrentNod());
+	return this;
+}
 ListaSimpluInlantuita::ListaSimpluInlantuita()
 {
 }
