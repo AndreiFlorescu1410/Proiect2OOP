@@ -62,7 +62,7 @@ int read(ListaSimpluInlantuita *& lista, int& n, int reading_list) //meniul de c
 		while (1)
 		{
 			antet
-				cout << "Dati numele fisierului: ";
+			cout << "Dati numele fisierului: ";
 			char txt_name[100];
 			cin >> txt_name;          //citesc numele fisierului
 			ifstream f(txt_name);
@@ -77,25 +77,29 @@ int read(ListaSimpluInlantuita *& lista, int& n, int reading_list) //meniul de c
 			{
 				if (reading_list >= 1)
 				{
-					Nod* new_element;
-					if (reading_list == 1)
+					Nod* new_element = new Nod;
+					Nod_Dublu* new_dublu = new Nod_Dublu;
+					Nod_Prioritate* new_prioritate = new Nod_Prioritate;
+					if (reading_list == 2)
 					{
-						lista = new ListaSimpluInlantuita;
-						new_element = new Nod();
+						new_element = new_dublu;
 					}
-					else if (reading_list == 2)
+					else if(reading_list == 3)
 					{
-						lista = new ListaDubluInlantuita;
-						new_element = new Nod_Dublu();
-					}
-					else
-					{
-						lista = new CoadaDePrioritati;
-						new_element = new Nod_Prioritate();
+						new_element = new_prioritate;
 					}
 					lista->SetCurrentNod(new_element);
+					int temp_prio;
 					while (f >> new_element)					//citesc valoarea nodului
 					{
+
+						if (new_element == dynamic_cast<Nod_Prioritate*>(new_element))
+						{
+							Nod_Prioritate* new_prio = dynamic_cast<Nod_Prioritate*>(new_element);
+							f >> temp_prio;
+							new_prio->SetPrio(temp_prio);
+							new_element = new_prio;
+						}
 						lista->insert_after_x(new_element, lista->GetCurrentNod()->GetI());
 						lista->SetCurrentNod(new_element);		//il adaug la "finalul" listei      
 						lista->SetLast(new_element);
@@ -130,29 +134,32 @@ int read(ListaSimpluInlantuita *& lista, int& n, int reading_list) //meniul de c
 					cout << "Dati numarul de elemente din lista: ";
 					cin >> n;
 					cout << "Dati elementele listei: ";
-					Nod* new_element;
-					if (reading_list == 1)
+					Nod* new_element = new Nod;
+					Nod_Dublu* new_dublu = new Nod_Dublu;
+					Nod_Prioritate* new_prioritate = new Nod_Prioritate;
+					if (reading_list == 2)
 					{
-						lista = new ListaSimpluInlantuita;
-						new_element = new Nod;
+						new_element = new_dublu;
 					}
-					else if (reading_list == 2)
+					else if(reading_list == 3)
 					{
-						lista = new ListaDubluInlantuita;
-						new_element = new Nod_Dublu;
+						new_element = new_prioritate;
 					}
-					else
-					{
-						lista = new CoadaDePrioritati;
-						new_element = new Nod_Prioritate;
-					}
+					lista->SetCurrentNod(new_element);
+					int temp_prio;
 					for (int i = 0; i < n; i++)
 					{
 						cin >> new_element;           //citesc valoarea nodului
+						if (new_element == dynamic_cast<Nod_Prioritate*>(new_element))
+						{
+							Nod_Prioritate* new_prio = dynamic_cast<Nod_Prioritate*>(new_element);
+							cin >> temp_prio;
+							new_prio->SetPrio(temp_prio);
+							new_element = new_prio;
+						}
 						lista->insert_after_x(new_element, lista->GetCurrentNod()->GetI());
 						lista->SetCurrentNod(new_element);		//il adaug la "finalul" listei      
 						lista->SetLast(new_element);
-						cout << lista->GetCurrentNod();
 						Nod* temp = new Nod;
 						new_element = temp;
 						delete new_element;
@@ -186,7 +193,7 @@ int read(ListaSimpluInlantuita *& lista, int& n, int reading_list) //meniul de c
 		break;
 	}
 	}
-	if (reading_list == 1)
+	if (reading_list >= 1)
 		return 0;
 	else
 		return k;
@@ -196,9 +203,15 @@ void afisare(Nod* first, int n) //afiseaz lista care incepe de la nodul "first"
 {
 	antet
 		cout << "Lista are " << n << " elemente: " << endl;
+
 	for (int i = 0; i < n; i++)
 	{
 		cout << first;
+		if (first == dynamic_cast<Nod_Prioritate*>(first))
+		{
+			Nod_Prioritate* new_prio = dynamic_cast<Nod_Prioritate*>(first);
+			cout << "(" << new_prio->GetPrio() << ") ";
+		}
 		first = (first->GetNext());
 	}
 	cout << endl << "Apasa orice tasta pentru a te intoarce..." << endl;
@@ -238,23 +251,30 @@ void menu(ListaSimpluInlantuita*& lista, int n, int tip_lista) //meniul principa
 
 			int caz2;
 			cin >> caz2;
-			Nod* new_element = new Nod;
+			Nod* new_element;
 			if (tip_lista == 1)
-				new_element == new Nod;
+				new_element = new Nod;
 			else if (tip_lista == 2)
-				new_element == new Nod_Dublu;
+				new_element = new Nod_Dublu;
 			else
 				new_element = new Nod_Prioritate;
 
 			antet
 			cout << "Dati valoarea noului nod: "; 
 			cin >> new_element; //citesc noul nod, inainte de a intra in switch, pentru a economisi memorie
-
+			int temp_prio;
+			if (new_element == dynamic_cast<Nod_Prioritate*>(new_element))
+			{
+				Nod_Prioritate* new_prio = dynamic_cast<Nod_Prioritate*>(new_element);
+				cin >> temp_prio;
+				new_prio->SetPrio(temp_prio);
+				new_element = new_prio;
+			}
 			switch (caz2)
 			{
 			case 1:
 			{
-				lista->insert_after_x(new_element, -1);
+				lista->insert_after_x(new_element, lista->GetLast()->GetI());
 				lista->SetLast(new_element);
 				n++;
 				cout << endl << "Nod adaugat cu succes." << endl;
@@ -267,6 +287,7 @@ void menu(ListaSimpluInlantuita*& lista, int n, int tip_lista) //meniul principa
 				int x;
 				cout << "Dati valoarea nodului 'x': "; cin >> x;
 				lista->insert_after_x(new_element, x);
+				lista->SetLast(new_element);
 				n++;
 				cout << endl << "Nod adaugat cu succes." << endl;
 				cout << endl << "Apasa orice tasta pentru a te intoarce..." << endl;
@@ -292,9 +313,13 @@ void menu(ListaSimpluInlantuita*& lista, int n, int tip_lista) //meniul principa
 		antet
 			int x;
 		cout << "Dati valoarea nodului pe care vreti sa-l stergeti: "; cin >> x;
-		lista->remove_x(x);
-		n--;
-		cout << endl << "Nod sters cu succes." << endl;
+		if (lista->remove_x(x) == 0)
+			cout << endl << "Nu am gasit nodul.";
+		else
+		{
+			n--;
+			cout << endl << "Nod sters cu succes." << endl;
+		}
 		cout << endl << "Apasa orice tasta pentru a te intoarce..." << endl;
 		_getch();
 		break;
@@ -310,19 +335,21 @@ void menu(ListaSimpluInlantuita*& lista, int n, int tip_lista) //meniul principa
 	}
 	case 5:
 	{
-		int n2 = 0,tip_lista2;
+		int n2 = 0;
 		antet
-		cout << "Dati tipul de lista(1-lista simpla, 2-lista dubla, 3-coada de prioritati): ";
-		cin >> tip_lista2;
 		ListaSimpluInlantuita* lista2;
-		if (tip_lista2 == 1)
+		if (tip_lista == 1)
 			lista2 = new ListaSimpluInlantuita;
-		else if (tip_lista2 == 2)
+		else if (tip_lista == 2)
 			lista2 = new ListaDubluInlantuita;
 		else
 			lista2 = new CoadaDePrioritati;
-		read(lista2, n2, tip_lista2);           //citesc a doua lista
+		read(lista2, n2, tip_lista);           //citesc a doua lista
+		cout << lista->GetFirst();
+		cout << lista->GetLast();
 		lista->GetLast()->SetNext(lista2->GetFirst());
+		if (tip_lista == 2)
+			dynamic_cast<Nod_Dublu*>(lista2->GetFirst())->SetPrev(dynamic_cast<Nod_Dublu*>(lista->GetLast()));
 		lista->SetLast(lista2->GetLast());
 		n += n2;                   //actualizez lungimea noii liste
 		cout << endl << "Liste concatenate cu succes." << endl;
@@ -343,8 +370,14 @@ int main()
 	ifstream f("input.in");
 	int n = 0, tip_lista;                            //lungimea listei
 	ListaSimpluInlantuita* lista;
-	antet
 	cout << "Dati tipul listei: "; cin >> tip_lista;
+	if (tip_lista == 1)
+		lista = new ListaSimpluInlantuita;
+	else if (tip_lista == 2)
+		lista = new ListaDubluInlantuita;
+	else
+		lista = new CoadaDePrioritati;
+	antet
 	read(lista, n, tip_lista);
 	menu(lista,n,tip_lista);
 	return 0;

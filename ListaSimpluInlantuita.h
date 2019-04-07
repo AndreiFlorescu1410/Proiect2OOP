@@ -7,13 +7,15 @@ class Nod {
 	Nod* next;
 
 public:
-	Nod* GetNext() { return next; }
-	void SetNext(Nod* Next) { next = Next; }
+	virtual Nod* GetNext() { return next; }
+	virtual void SetNext(Nod* Next) { next = Next; }
 	int GetI() { return i; };
 	void SetI(int x) { i = x; };
 
 	friend ostream& operator <<(ostream&, Nod*);
 	friend istream& operator >>(istream&, Nod*);
+
+	Nod();
 	friend class ListaSimpluInlantuita;
 
 };
@@ -21,15 +23,15 @@ public:
 class ListaSimpluInlantuita {
 	Nod* current_nod, *first, *last;
 public:
-	Nod* GetCurrentNod() { return current_nod; }
-	void SetCurrentNod(Nod* current) { current_nod = current; }
-	Nod* GetFirst() { return first; }
-	void SetFirst(Nod* First) { first = First; }
-	Nod* GetLast() { return last; }
-	void SetLast(Nod* Last) { last = Last; }
+	virtual Nod* GetCurrentNod() { return current_nod; }
+	virtual void SetCurrentNod(Nod* current) { current_nod = current; }
+	virtual Nod* GetFirst() { return first; }
+	virtual void SetFirst(Nod* First) { first = First; }
+	virtual Nod* GetLast() { return last; }
+	virtual void SetLast(Nod* Last) { last = Last; }
 
-	void remove_x(int);
-	void insert_after_x(Nod*, int);
+	virtual bool remove_x(int);
+	virtual void insert_after_x(Nod*, int);
 	ListaSimpluInlantuita();
 
 	ListaSimpluInlantuita* operator+(ListaSimpluInlantuita*);

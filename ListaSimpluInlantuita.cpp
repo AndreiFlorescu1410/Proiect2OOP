@@ -1,6 +1,6 @@
 #include "ListaSimpluInlantuita.h"
 
-void ListaSimpluInlantuita::remove_x( int x)
+bool ListaSimpluInlantuita::remove_x( int x)
 {
 	Nod* nod = this->GetFirst();
 	if (nod->GetI() == x)                   //cazul in care vrem sa stergem primul nod
@@ -14,19 +14,20 @@ void ListaSimpluInlantuita::remove_x( int x)
 		while (nod->GetNext()->GetI() != x)            //caut nodul cu valorea x
 		{
 			nod = nod->GetNext();
-			if (nod == NULL)
-				return;
+			if (nod->GetNext() == NULL)
+				return 0;
 		}
 		if (this->GetLast() == nod->GetNext())
 		{
 			this->SetLast(nod);
 			delete nod->GetNext();
-			return;
+			return 1;
 		}
 		Nod* temp = nod->GetNext()->GetNext();
 		delete nod->GetNext();
 		nod->SetNext(temp);
 	}
+	return 1;
 }
 
 void ListaSimpluInlantuita::insert_after_x(Nod* new_element, int x)
@@ -41,7 +42,7 @@ void ListaSimpluInlantuita::insert_after_x(Nod* new_element, int x)
 	{
 		c = c->GetNext();
 	}
-	Nod * after_new = c->GetNext();						//initializez nodul ce urmeaza sa fie precedentul noului nod
+	Nod* after_new = c->GetNext();						//initializez nodul ce urmeaza sa fie precedentul noului nod
 	c->SetNext(new_element);							//inlocuiesc nodul urmator(al nodului curent) cu noul nod
 	new_element->SetNext(after_new);
 }
@@ -51,6 +52,14 @@ ListaSimpluInlantuita::ListaSimpluInlantuita()
 	first = NULL;
 	last = NULL;
 	current_nod = NULL;
+}
+
+ListaSimpluInlantuita* ListaSimpluInlantuita::operator+(ListaSimpluInlantuita* first2)
+{
+
+	this->GetLast()->SetNext(first2->GetCurrentNod());
+	this->SetLast(first2->GetLast());
+	return this;
 }
 
 istream& operator >>(istream& i, Nod* c)
@@ -67,9 +76,9 @@ ostream& operator <<(ostream& o, Nod* c)
 	return o;
 }
 
-ListaSimpluInlantuita* ListaSimpluInlantuita::operator +(ListaSimpluInlantuita* first2)
+
+Nod::Nod()
 {
-	this->GetLast()->SetNext(first2->GetCurrentNod());
-	this->SetLast(first2->GetLast());
-	return this;
+	next = NULL;
+	i = -2;
 }

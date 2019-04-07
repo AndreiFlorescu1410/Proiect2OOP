@@ -14,7 +14,7 @@ ostream& operator <<(ostream& o, Nod_Dublu* c)
 	return o;
 }
 
-void ListaDubluInlantuita::remove_x(int x)
+bool ListaDubluInlantuita::remove_x(int x)
 {
 	Nod_Dublu* nod = this->GetFirst();
 	if (nod->GetI() == x)                   //cazul in care vrem sa stergem primul nod
@@ -25,45 +25,54 @@ void ListaDubluInlantuita::remove_x(int x)
 	}
 	else
 	{
-		while (nod->GetNext()->GetI() != x)            //caut nodul cu valorea x
+		while (nod->GetI() != x)            //caut nodul cu valorea x
 		{
 			nod = nod->GetNext();
 			if (nod == NULL)
-				return;
+				return 0;
 		}
-		if (this->GetLast() == nod->GetNext())
+		if (this->GetLast() == nod)
 		{
-			this->SetLast(nod);
-			delete nod->GetNext();
-			return;
+			this->SetLast(nod->GetPrev());
+			delete nod;
+			return 1;
 		}
-		Nod_Dublu* temp = nod->GetNext()->GetNext();
-		temp->SetPrev(nod);
-		delete nod->GetNext();
-		nod->SetNext(temp);
+		Nod_Dublu* temp = nod->GetNext();
+		temp->SetPrev(nod->GetPrev());
+		nod->GetPrev()->SetNext(temp);
+		delete nod;
 	}
+	return 1;
 }
 
-void ListaDubluInlantuita::insert_after_x(Nod_Dublu* new_element, int x)
+void ListaDubluInlantuita::insert_after_x(Nod* new_Nod, int x)
 {
-	Nod_Dublu* c = this->GetCurrentNod();
-	while (c->GetI() != x)								//caut nodul cu valorea x
+	Nod_Dublu* new_element = dynamic_cast<Nod_Dublu*>(new_Nod);
+	if (this->GetFirst() == NULL)
+	{
+		this->SetFirst(new_element);
+		return;
+	}
+	Nod_Dublu* c = this->GetFirst();
+	while (c->GetI() != x && c != this->GetLast())								//caut nodul cu valorea x
 	{
 		c = c->GetNext();
-		if (c == NULL)
-			return;
 	}
-	Nod_Dublu* after_new = c->GetNext();						//initializez nodul ce urmeaza sa fie precedentul noului nod
+	//initializez nodul ce urmeaza sa fie precedentul noului nod
 	c->SetNext(new_element);							//inlocuiesc nodul urmator(al nodului curent) cu noul nod
-	new_element->SetNext(after_new);
-	new_element->SetNext(c);
-	after_new->SetPrev(new_element);
+	new_element->SetPrev(c);
 }
 
-ListaDubluInlantuita* ListaDubluInlantuita::operator +(ListaDubluInlantuita* first2)
+ListaDubluInlantuita* operator +(ListaDubluInlantuita& first, ListaDubluInlantuita* first2)
 {
-	this->GetLast()->SetNext(first2->GetCurrentNod());
-	this->SetLast(first2->GetLast());
-	first2->GetFirst()->SetPrev(this->GetLast());
-	return this;
+	first.GetLast()->SetNext(first2->GetCurrentNod());
+	first.SetLast(first2->GetLast());
+	first2->GetFirst()->SetPrev(first.GetLast());
+	return &first;
+}
+
+Nod_Dublu::Nod_Dublu()
+{
+	prev = NULL;
+	next = NULL;
 }
