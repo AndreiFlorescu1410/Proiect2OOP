@@ -1,8 +1,8 @@
-Liste de numere întregi (implementate dinamic)  
+## Liste de numere întregi (implementate dinamic)  
 
 
 
-Se dau urmatoarele clase:  
+#### Se dau urmatoarele clase:  
 - Nod {int info, nod*next}  
 - Nod_dublu:Nod {nod * ante}  
 - Nod_prioritate:Nod_dublu {int prio}  
@@ -17,7 +17,7 @@ Clasele derivate trebuie sa contina cel puțin constructori parametrizati
 prin care sa se evidentieze transmiterea parametrilor către 
 constructorul din clasa de baza si destructori.
 
-Fiecare clasa trebuie sa aibe: 
+#### Fiecare clasa trebuie sa aibe: 
  - metode de: introducere a unui element (unde alege programatorul)  
  - supraincarcare a operatorului >>, realizata prin introduceri succesive  
  - supraincarcare a operatorului <<; pentru afisarea listei;  
